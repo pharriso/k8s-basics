@@ -8,8 +8,7 @@ This is to show you how quickly you can deploy a complete application to Kuberne
 
 The first part of the application we want to deploy is the MongoDB database. The set of resource files for deploying this can be found in the `database` directory.
 
-[.console-input]
-[source,execute]
+[source,role="copypaste",subs="attributes"]
 ----
 ls -las database/
 ----
@@ -18,15 +17,15 @@ Each file in the directory contains a different resource definition which go tog
 
 Rather than try and dig into each file to work out what it defines, you can have Kubernetes tell you what resources it would create when the directory of resources is processed. To do this, run:
 
-[.console-input]
-[source,execute]
+[source,role="copypaste",subs="attributes"]
 ----
 kubectl apply -f database/ --dry-run=client
 ----
 
 This should output:
 
-[source]
+[.console-output]
+[source,subs="attributes"]
 ----
 secret/blog-credentials created (dry run)
 service/blog-db created (dry run)
@@ -160,7 +159,8 @@ into your browser (`Please make sure you use the host name from your cluster`)
 
 It should look like:
 
-image::parksmap.png[Parksmap, 900]
+[.bordershadow]
+image::parksmap.png[link="self",window=_blank]
 
 NOTE: There are no national parks displayed as yet. We still have to deploy the backend application, which is what we'll do next.
 
