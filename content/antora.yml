@@ -1,8 +1,10 @@
 name: modules
 title: Kubernetes Basic Workshop
-version: master
+version: main
 nav:
   - modules/ROOT/nav.adoc
+
+start_page: ROOT:index.adoc
 
 asciidoc:
   attributes:
@@ -11,9 +13,8 @@ asciidoc:
     page-pagination: true
     my_var: "foo"
     guid: my-guid
-    ssh_user: devops
-    ssh_password: devops
-    ssh_command: ssh someone@example.com
-    page-links:
-    - url: https://redhat.com
-      text: Red Hat
+    openshift_console_url: https://console.apps.cluster.example.com
+    openshift_cluster_ingress_domain: apps.cluster.example.com
+    user: userX
+    password: password
+    login_command: oc login --insecure-skip-tls-verify=false -u userX -p password https://api.cluster.example.com:6443
