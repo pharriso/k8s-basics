@@ -1,3 +1,6 @@
+
+include::vars.adoc[]
+
 For the exercises you will be doing, you will be using the `kubectl` command line program to interact with Kubernetes. 
 
 The terminal window is provided for you via the interactive terminal session. It is accessible through the OpenShift Console cluster console URL. The URL will be made available to you once you have registered for a user. Don't worry, the lovely folks running the workshop will provide you with the instructions and URL's required to register during the introduction. You do not need to install anything on your own computer. You will be doing everything here through your web browser. 
