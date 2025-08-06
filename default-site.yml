@@ -10,7 +10,8 @@ content:
 
 ui:
   bundle:
-    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/v0.0.1/ui-bundle.zip
+    url: https://github.com/rhpds/nookbag/releases/download/nookbag-v0.0.5/nookbag-v0.0.5.zip
+#    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/v0.0.1/ui-bundle.zip
     snapshot: true
   supplemental_files:
     - path: ./content/supplemental-ui
