@@ -1,10 +1,15 @@
+= Deploying an Application
+:navtitle: Deploying an Application
+
+include::vars.adoc[]
+
 Now you have checked your access to the Kubernetes cluster is working, we are going to immediately jump in and deploy a complete application, consisting of a front end web application, a backend restful application, along with a MongoDB database for storing the worlds national parks in. Together, they will implement a site that maps the worlds national parks.
 
-## Deploying an Application
+== Deploying an Application
 
 This is to show you how quickly you can deploy a complete application to Kubernetes if you already have the configuration. Once the complete application has been deployed, we will delete the front end web application component, and deploy it again in steps so you can see how it fits together and how it uses Kubernetes.
 
-### Deploying the database
+=== Deploying the database
 
 The first part of the application we want to deploy is the MongoDB database. The set of resource files for deploying this can be found in the `database` directory.
 
@@ -74,7 +79,7 @@ kubectl rollout  status deployment/mongodb-community-server
 
 The argument is the full name of the resource, including the type of resource and the name for this instance. In this case the instance was called `mongodb-community-server`.
 
-### Deploying the front end web application
+=== Deploying the front end web application
 
 With the database deployed, now deploy the front end web application by running:
 
@@ -164,7 +169,7 @@ image::parksmap.png[link="self",window=_blank]
 
 NOTE: There are no national parks displayed as yet. We still have to deploy the backend application, which is what we'll do next.
 
-### Deploy the backend restful application
+=== Deploy the backend restful application
 
 With the front end web application deployed, now deploy the backend application by running:
 
@@ -194,7 +199,7 @@ kubectl rollout status deployment/nationalparks-py
 
 Now visit the front end web application again (make sure you refresh the page), and you'll notice that there are still no national parks displayed. This is because there is no data in the database yet. 
 
-### Load the data
+=== Load the data
 
 Fortunately, the backend application has an API that we can use to load the data. Later, we'll look at how logging might have helped us work this out.
 
@@ -217,13 +222,14 @@ This should output:
 As the terminal window is running in the same namespace as the nationalparks-py application on Kubernetes, it can access the kubernetes service directly hence no need for finding out the ingress host name to use (more later).
 
 
-### Let the fun begin!!!
+=== Let the fun begin!!!
 
 You should now see a page similar to the one below:
 
 Refresh the parksmap page in the `browser` and this time you should see national parks appearing on the map.
 
-image::parksmap-with-np.png[Working Parksmap, 900]
+[.bordershadow]
+image::parksmap-with-np.png[link="self",window=_blank]
 
 Feel free to move around the map, zoom in and out, and click on national parks.
 
