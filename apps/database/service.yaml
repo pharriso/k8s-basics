@@ -2,7 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mongodb-community-server
-  namespace: user1-workshop
   labels:
     app: workshop
     app.kubernetes.io/component: mongodb-community-server
