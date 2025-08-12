@@ -19,6 +19,11 @@ To access the OpenShift Console, navigate to the following URL in your browser a
 
 *Password:* `{ocp4_starter_password}`
 
+*Note from Phil....The login part below needs to change, it will not work using the workshop framework as is. Need to come up with a way the attendee can login using kubectl. I've tried and failed so far as the cluster is using keycloak for login (I think)*
+*Worst caswe, we can put some instructions in to go to the console and get the login command using a token and oct command. Comming back to it later*
+
+*For now, you are OCP experts, just go to the console, get the login command and token and use that for testing*
+
 
 ## Accessing the terminal window in the Kubernetes Cluster
 
