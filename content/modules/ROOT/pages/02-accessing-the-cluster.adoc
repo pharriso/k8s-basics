@@ -35,44 +35,22 @@ One logged in, you should see a page similar to the one shown below:
 
 image::openshift-console.png[OpenShift Console, 1000]
 
-### Create a namespace and open the terminal window
+### Create a namespace
 
-On the top right hand side of the console, you'll see the icon below:
+As an enterprise Kubernetes deployment, the environment you are using is locked down and you are unable to create namespaces. Namespaces enable you to isolate your resources within a single cluster. The isolation is what's enabling all workshop attendees to perform the same labs on the same cluster without impacting each other's work.
 
-image::terminal-icon.png[Terminal, 40]
+A namespace has automatically been created for you, it is called 
 
-Click on it
+wksp-{user}
 
-You'll then see a page like this:
+You won't really know that you are using it, as your environment will default to it all the time. It's good to know that it is being used though, as namespaces will become an important facility you use to isolate workloads on the clusters. 
 
-image::configure-terminal.png[Configure Terminal, 900]
-
-In `Project name` enter:
-
-[.console-input]
-[source]
-----
-{your username}-workshop
-----
-
-If you need a reminder of your username, you'll find it on the registration web app.
-
-The page should look similar to the screen below (with your username in of course):
-
-image::terminal-configured.png[Configured Terminal, 900]
-
-and press `start`
-
-Finally, you shoud see your terminal window:
-
-image::terminal-window.png[Terminal Window, 900]
-
-If you want a bigger window to use, you can either:
-
-* move the hozizontal bar up, or
-* press the button in the top right hand corner of the terminal window to open a new tab
 
 NOTE: Most of the workshop will now take place in the terminal window. 
+
+For reference, you can see an example of the terminal window on the right hand side of the browser below.
+
+image::terminal-window.png[Terminal Window, 900]
 
 ### Clone the GIT repository required for the workshop
 
