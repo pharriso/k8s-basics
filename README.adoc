@@ -15,6 +15,19 @@ Features:
 
 == Getting Started
 
+
+== Deploying to OpenShift
+
+
+clone the showroom deployer (https://github.com/rhpds/showroom-deployer.git) and locally run the helm chart showroom-single-pod. Here an example 
+
+Make sure you change the guid and deployer.domain to your own env.
+````
+helm template basic-k8s ./showroom-single-pod --set deployer.domain=apps.cluster-{guid}.dynamic.redhatworkshops.io --set general.guid={guid} --set general.namespace=workshop --set content.repoUrl=https://github.com/pprosser-redhat/k8s-basics.git  --set-string terminal.setup="true" --set terminal.display_name="K8s Basics" --set-string second_terminal_tab.setup="false" --set-string wetty.setup="false"  | oc apply -f -
+````
+
+
+
 === Using Containers (Recommended)
 
 In order to test and develop on your local machine, you can use a specially built container with Podman or Docker as follows.
