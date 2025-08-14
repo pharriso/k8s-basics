@@ -168,6 +168,161 @@ spec:
 
 You can see the labels you added above.
 
+If you look closely, you might notice that there are some more labels in the abouve yaml. These appear after the 'template' line. 
+
+The template section of the yaml file is used by Kubernetes to ensure that the number of pods executung is that defined in the deployment.  As this process is automatic, Kubernetes uses the template section to create new pod objects in the cluster.
+
+It would be a good idea if we had some of labels defined in the template as well. To do this we'll use the `kubectl edit` command. In your terminal window type:
+
+[.console-input]
+[source, execute]
+----
+kubectl edit deployment parksmap
+----
+
+You'll need to follow along carefully as the indentation is really important in yaml. If you are unfamilar with terminal line editors then please ask one of the Red Hatters to help.
+
+You should see the following output:
+
+[.console-output] 
+[source]
+----
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2025-08-14T14:41:56Z"
+  generation: 1
+  labels:
+    app: workshop
+    app.kubernetes.io/component: parksmap
+    app.kubernetes.io/instance: parksmap
+    app.kubernetes.io/name: parksmap
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/runtime: rh-spring-boot
+    component: parksmap
+    role: frontend
+  name: parksmap
+  namespace: wksp-user1
+  resourceVersion: "935191"
+  uid: 67c938ee-dd95-4f3a-ab7c-40e21df9276b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: parksmap
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: parksmap
+    spec:
+      containers:
+      - image: quay.io/openshiftroadshow/parksmap:latest
+        imagePullPolicy: Always
+        name: parksmap
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2025-08-14T14:41:56Z"
+    lastUpdateTime: "2025-08-14T14:41:59Z"
+    message: ReplicaSet "parksmap-86f598b786" has successfully progressed.
+----
+
+Find the section under template called labels, you should see `app: parksmap` there.
+
+[.console-output]
+[source]
+----
+delete that whole line 
+----
+
+copy and paste the following labels:
+
+[.console-output]
+[source]
+----
+        app: parksmap
+        component: parksmap
+        deployment: parksmap
+        role: frontend
+----
+
+`it is really important that they are indented by 2 spaces underneath labels`
+
+When completed, the parksmap template label section should look like:
+
+[.console-output]
+[source]
+----
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2025-08-14T14:41:56Z"
+  generation: 1
+  labels:
+    app: workshop
+    app.kubernetes.io/component: parksmap
+    app.kubernetes.io/instance: parksmap
+    app.kubernetes.io/name: parksmap
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/runtime: rh-spring-boot
+    component: parksmap
+    role: frontend
+  name: parksmap
+  namespace: wksp-user1
+  resourceVersion: "935191"
+  uid: 67c938ee-dd95-4f3a-ab7c-40e21df9276b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: parksmap
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: parksmap
+        component: parksmap
+        deployment: parksmap
+        role: frontend
+...
+----
+
+
 Using 'kubectl create' to create the deployment is really useful, and a great tool for learning and creating the required yaml for all artefacts in the cluster.
 
 Once you start heading to production though, you'll be wanting to automate deployment by creating, and deploying the yaml files (as we did in the earlier lab). Using tools such as Helm and Kustomize can make light work of templating/deploying applications into production.  
