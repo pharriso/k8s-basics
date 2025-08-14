@@ -97,27 +97,8 @@ image::ingress-screenshot.png[Parksmap Ingress, 900]
 
 to the host field you see below.
 
-
-```kind: Ingress
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: parksmap
-  labels:
-    app: workshop
-    role: frontend
-spec:
-  rules:
     - host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: parksmap
-                port:
-                  number: 8080
-```
+
 
 
 === Deploying the front end web application
