@@ -1,6 +1,7 @@
 * Getting Started
 ** xref:01-the-openshift-platform.adoc[Introduction]
 ** xref:02-accessing-the-cluster.adoc[Accessing the cluster]
+** xref:common-parksmap-architecture.adoc[Parksmap Application]
 
 * Deploying the Application
 ** xref:03-deploying-an-application.adoc[Deploy the Application]

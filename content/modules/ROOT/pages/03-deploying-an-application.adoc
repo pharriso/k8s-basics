@@ -79,10 +79,11 @@ kubectl rollout  status deployment/mongodb-community-server
 
 The argument is the full name of the resource, including the type of resource and the name for this instance. In this case the instance was called `mongodb-community-server`.
 
-=== Environment changes
+=== Deploying the front end web application
 
-As you are running on an environment provisioned specifically for the workshop, it does mean that we have to make a few changes to the application deployment before we can go ahead and deploy. 
+As you are running on an environment provisioned specifically for the workshop, it does mean that we have to make a a change to the application deployment before we can go ahead and deploy the frontend application. 
 
+==== Change the host address
 In the terminal window, edit the file `frontend/ingress-parksmap.yaml`
 
 type
@@ -99,11 +100,7 @@ to the host field you see below.
 
 `- host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io`
 
-
-
-=== Deploying the front end web application
-
-With the database deployed, now deploy the front end web application by running:
+==== Deploy the front end web application
 
 [.console-input]
 [source,execute]
@@ -224,7 +221,7 @@ Fortunately, the backend application has an API that we can use to load the data
 To load the data into the database, run:
 
 
-`curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/all`
+`curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/load`
 
 
 This should output:
