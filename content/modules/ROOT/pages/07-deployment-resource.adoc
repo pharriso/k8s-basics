@@ -90,7 +90,7 @@ As we have done previously, you can monitor the deployment to make sure it's suc
 kubectl rollout  status deployment/parksmap
 ----
 
-To make the application more manageable we'll add our labels. Hopefully we'll get his simialar to those we deployed earlier.
+To make the application more manageable we'll add our labels. Hopefully we'll get this simialar to those we deployed earlier.
 
 Run the following command
 
@@ -105,7 +105,7 @@ To make sure the command was successful, run the following command
 [.console-input]
 [source, execute]
 ----
-kubectl describe deployment parksmap
+kubectl get  deployment parksmap -o yaml
 ----
 
 The outout should look similar to the following:
@@ -113,46 +113,57 @@ The outout should look similar to the following:
 [.console-output]
 [source]
 ----
-Name:                   parksmap
-Namespace:              wksp-user1
-CreationTimestamp:      Thu, 14 Aug 2025 14:41:56 +0000
-Labels:                 app=workshop
-                        app.kubernetes.io/component=parksmap
-                        app.kubernetes.io/instance=parksmap
-                        app.kubernetes.io/name=parksmap
-                        app.kubernetes.io/part-of=workshop
-                        app.openshift.io/runtime=rh-spring-boot
-                        component=parksmap
-                        role=frontend
-Annotations:            deployment.kubernetes.io/revision: 1
-Selector:               app=parksmap
-Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
-StrategyType:           RollingUpdate
-MinReadySeconds:        0
-RollingUpdateStrategy:  25% max unavailable, 25% max surge
-Pod Template:
-  Labels:  app=parksmap
-  Containers:
-   parksmap:
-    Image:         quay.io/openshiftroadshow/parksmap:latest
-    Port:          <none>
-    Host Port:     <none>
-    Environment:   <none>
-    Mounts:        <none>
-  Volumes:         <none>
-  Node-Selectors:  <none>
-  Tolerations:     <none>
-Conditions:
-  Type           Status  Reason
-  ----           ------  ------
-  Available      True    MinimumReplicasAvailable
-  Progressing    True    NewReplicaSetAvailable
-OldReplicaSets:  <none>
-NewReplicaSet:   parksmap-86f598b786 (1/1 replicas created)
-Events:
-  Type    Reason             Age   From                   Message
-  ----    ------             ----  ----                   -------
-  Normal  ScalingReplicaSet  51s   deployment-controller  Scaled up replica set parksmap-86f598b786 from 0 to 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2025-08-14T14:41:56Z"
+  generation: 1
+  labels:
+    app: workshop
+    app.kubernetes.io/component: parksmap
+    app.kubernetes.io/instance: parksmap
+    app.kubernetes.io/name: parksmap
+    app.kubernetes.io/part-of: workshop
+    app.openshift.io/runtime: rh-spring-boot
+    component: parksmap
+    role: frontend
+  name: parksmap
+  namespace: wksp-user1
+  resourceVersion: "909871"
+  uid: 67c938ee-dd95-4f3a-ab7c-40e21df9276b
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: parksmap
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: parksmap
+    spec:
+      containers:
+      - image: quay.io/openshiftroadshow/parksmap:latest
+        imagePullPolicy: Always
+        name: parksmap
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+...
 ----
 
 You can see the labels you added above.
