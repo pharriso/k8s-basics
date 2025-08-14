@@ -97,7 +97,7 @@ image::ingress-screenshot.png[Parksmap Ingress, 900]
 
 to the host field you see below.
 
-    - host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io
+`- host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io`
 
 
 
