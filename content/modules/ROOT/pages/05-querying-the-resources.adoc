@@ -6,7 +6,7 @@ If you would like to access access the console, you can access it here `{openshi
 
 As a reminder,  you username and password are:
 
-username: {user}
+username: {user} +
 password: {password}
 
 Most developers will interact with a Kubernetes cluster from the command line using `kubectl`.
