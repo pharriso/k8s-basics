@@ -1,6 +1,13 @@
-The web console for a Kubernetes cluster can be used to display a visual representation, in your browser, of what resources have been created and the relationship between them,by way of a tease here is a screenshot of what it looks like:
+The web console for a Kubernetes cluster can be used to display a visual representation of what you've deployed. In your browser you can see what resources have been created and the relationship between them, by way of a tease here is a screenshot of what it looks like:
 
 image::deployments-console.png[Deployments, 800]
+
+If you would like to access access the console, you can access it here `{openshift_console_url}`
+
+As a reminder,  you username and password are:
+
+username: {user}
+password: {password}
 
 Most developers will interact with a Kubernetes cluster from the command line using `kubectl`.
 
@@ -18,15 +25,11 @@ This should yield output:
 [.console-output]
 [source]
 ----
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-mongodb-community-server    1/1     1            1           15m
-nationalparks-py            1/1     1            1           9m2s
-parksmap                    2/2     2            2           14m
-workspace1dfffd9cfbe34c7d   1/1     1            1           20m
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+mongodb-community-server   1/1     1            1           108m
+nationalparks-py           1/1     1            1           39m
+parksmap                   2/2     2            2           41m
 ----
-
-NOTE: The deployment starting with the name 'workspace' can be ignored. This deployment is hosting the web terminal window you are using. 
-
 
 To narrow in on a specific resource, the name of that resource can be added to the command:
 
