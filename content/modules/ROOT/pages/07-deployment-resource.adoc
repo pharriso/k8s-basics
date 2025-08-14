@@ -170,7 +170,7 @@ You can see the labels you added above.
 
 If you look closely, you might notice that there are some more labels in the above yaml. These appear after the 'template' line. 
 
-The template section of the yaml file is used by Kubernetes to ensure that the number of pods executung is that defined in the deployment.  As this process is automatic, Kubernetes uses the template section to create new pod objects in the cluster.
+The template section of the yaml file is used by Kubernetes to ensure that the number of pods executing is that defined in the deployment.  This process is automatic. Kubernetes uses the template section to  automatially create a `replicaset` from the template section. In turn the replicaset creates the correct number of Pods (more later). 
 
 It would be a good idea if we had some of our labels defined in the template as well. To do this we'll use the `kubectl edit` command. In your terminal window type:
 
