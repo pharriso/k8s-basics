@@ -1,56 +1,58 @@
 Having created the `deployment` run:
 
-```execute
-kubectl get all -o name -l app=blog
-```
+[.console-input]
+[source,execute]
+----
+kubectl get all -o name -l component=parksmap
+----
 
 The `all` value is not a resource type, but a short hand alias for the core Kubernetes resource types. It shows what we need here, but to be sure to get everything you want, you are usually better to list the resource types explicitly.
 
 The output should be similar to:
 
-```
-pod/blog-6b8999855c-6jjhj
-pod/blog-6b8999855c-zk8pg
-deployment.apps/blog
-replicaset.apps/blog-6b8999855c
-```
+[.console-output]
+[source]
+----
+pod/parksmap-8c5764566-4zlf4
+deployment.apps/parksmap
+replicaset.apps/parksmap-8c5764566
+----
 
 Although you only created the `deployment`, this has resulted in the creation of additional resources for `replicaset` and `pod`.
 
-This is because `deployment` acts as a template for the creation of a `replicaset`. A `replicaset` in turn acts as a template for the creation of the `pods`. It is the `pods` which represent the instances of your application. In this case, because the number of replicas has been set to 2, there are 2 pods.
+This is because `deployment` acts as a template for the creation of a `replicaset`. A `replicaset` in turn acts as a template for the creation of the `pods`. It is the `pods` which represent the instances of your application. In this case, because the number of replicas has been set to 1, there is 1 pod.
 
 To view the resource definition for the `replicaset` run:
 
-```execute
-kubectl get replicaset -l app=blog -o yaml
-```
+[.console-input]
+[source,execute]
+----
+kubectl get replicaset -l component=parksmap -o yaml
+----
 
 In this you will see that the `spec` section contains:
 
 ```
   spec:
-    replicas: 2
+    replicas: 1
     selector:
       matchLabels:
-        app: blog
-        pod-template-hash: "896156207"
+        app: parksmap
+        pod-template-hash: 8c5764566
     template:
       metadata:
         creationTimestamp: null
         labels:
-          app: blog
-          pod-template-hash: "896156207"
+          app: parksmap
+          component: parksmap
+          deployment: parksmap
+          pod-template-hash: 8c5764566
+          role: frontend
       spec:
         containers:
-        - env:
-          - name: BLOG_SITE_NAME
-            value: OpenShift Blog
-          image: openshiftkatacoda/blog-django-py:latest
+        - image: quay.io/openshiftroadshow/parksmap:latest
           imagePullPolicy: Always
-          name: blog
-          ports:
-          - containerPort: 8080
-            protocol: TCP
+          name: parksmap
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -65,9 +67,11 @@ This has been filled out with what was provided in the `spec` portion of the `de
 
 To view the resource definitions for the `pods` run:
 
-```execute
-kubectl get pod -l app=blog -o yaml
-```
+[.console-input]
+[source,execute]
+----
+kubectl get pod -l component=parksmap -o yaml
+----
 
 Here the fields from `spec.template` of the `replicaset` have been used in creating the `pod` resource definition. The `spec.template` of a `deployment` and `replicaset` is what is referred to as the pod template.
 
