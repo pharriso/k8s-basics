@@ -13,9 +13,7 @@ This has various parts to it, as well as dependencies on other resources, so let
 
 To create a new `deployment` resource what often happens is that a developer will copy an existing one, be it one from an existing application, or a sample provided in documentation or a blog post.
 
-An alternative is to have `kubectl` create it for you. For a `deployment`, the `kubectl` command provides two options for creating the resource definition for you.
-
-The first option is using the `kubectl create deployment` command.
+An alternative is to have `kubectl` create it for you using the `kubectl create deployment` command.
 
 [.console-input]
 [source, execute]
