@@ -174,11 +174,9 @@ The value of host is what you are after.
 
 Visit the front end web application by typing (or copying).
 
-[.console-input]
-[source,execute]
-----
-http://parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io/
-----
+
+`http://parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io/``
+
 
 into your browser (`Please make sure you use the host name from your cluster`)
 
@@ -225,11 +223,9 @@ Fortunately, the backend application has an API that we can use to load the data
 
 To load the data into the database, run:
 
-[.console-input]
-[source,execute]
-----
-curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/all
-----
+
+`curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/all`
+
 
 This should output:
 
