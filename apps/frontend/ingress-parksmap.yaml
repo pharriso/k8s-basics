@@ -7,8 +7,7 @@ metadata:
     role: frontend
 spec:
   rules:
-    - host: parksmap-user1-workshop.apps.cluster-5cbfd.dynamic.redhatworkshops.io
-#   - host: parksmap-${PROJECT_NAMESPACE}.${CLUSTER_SUBDOMAIN}
+    - host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io
       http:
         paths:
           - path: /

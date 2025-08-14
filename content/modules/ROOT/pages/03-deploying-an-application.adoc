@@ -32,10 +32,10 @@ This should output:
 [.console-output]
 [source,subs="attributes"]
 ----
-secret/blog-credentials created (dry run)
-service/blog-db created (dry run)
-persistentvolumeclaim/blog-database created (dry run)
-deployment.apps/blog-db created (dry run)
+deployment.apps/mongodb-community-server created (dry run)
+persistentvolumeclaim/national-parks-database created (dry run)
+secret/mongodb-nationalparks configured (dry run)
+service/mongodb-community-server created (dry run)
 ----
 
 
@@ -61,10 +61,10 @@ As with the dry run, `kubectl apply` will list the resources, except this time t
 [.console-output]
 [source]
 ----
-secret/blog-credentials created
-service/blog-db created
-persistentvolumeclaim/blog-database created
-deployment.apps/blog-db created
+deployment.apps/mongodb-community-server created
+persistentvolumeclaim/national-parks-database created
+secret/mongodb-nationalparks configured
+service/mongodb-community-server created
 ----
 
 The key resource in this list is `deployment`. It specifies the name of the container image to be deployed for an application, how many instances should be started, and the strategy for how the deployment should be managed.
@@ -78,6 +78,47 @@ kubectl rollout  status deployment/mongodb-community-server
 ----
 
 The argument is the full name of the resource, including the type of resource and the name for this instance. In this case the instance was called `mongodb-community-server`.
+
+=== Environment changes
+
+As you are running on an environment provisioned specifically for the workshop, it does mean that we have to make a few changes to the application deployment before we can go ahead and deploy. 
+
+In the terminal window, edit the file `frontend/ingress-parksmap.yaml`
+
+type
+[source, execute]
+----
+vim frontend/ingress-parksmap.yaml
+----
+
+and change the `host` field from what you see in the screenshot below:
+image::terminal-window.png[Parksmap Ingress, 900]
+
+to 
+
+[.console-input]
+[source]
+----
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: parksmap
+  labels:
+    app: workshop
+    role: frontend
+spec:
+  rules:
+    - host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: parksmap
+                port:
+                  number: 8080
+----
 
 === Deploying the front end web application
 
@@ -114,9 +155,7 @@ In the resources created for the front end web application, the `ingress` is spe
 
 In this example, the URL for accessing the front end web application will be:
 
-You need to substitute the `PROJECT_NAMESPACE` and `CLUSTER_SUBDOMAIN` variables with your own values.
-
-http://parksmap-%project_namespace%.%cluster_subdomain%
+http://parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io/
 
 This is easy to findout by running a query againts the parksmap ingress using `kubectl`:
 [.console-input]
@@ -157,7 +196,7 @@ Visit the front end web application by typing (or copying).
 [.console-input]
 [source,execute]
 ----
-http://parksmap-user1-workshop.apps.cluster-5cbfd.dynamic.redhatworkshops.io
+http://parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io/
 ----
 
 into your browser (`Please make sure you use the host name from your cluster`)
@@ -208,7 +247,7 @@ To load the data into the database, run:
 [.console-input]
 [source,execute]
 ----
-curl http://nationalparks-py:8080/ws/data/load
+curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/all
 ----
 
 This should output:

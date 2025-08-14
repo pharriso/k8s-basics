@@ -40,7 +40,7 @@ Delete the front end web application now by running:
 [.console-input]
 [source, execute]
 ----
-kubectl delete deployment,service,ingress,robebinding -l role=frontend
+kubectl delete deployment,service,ingress,rolebinding -l role=frontend
 ----
 
 This should output:

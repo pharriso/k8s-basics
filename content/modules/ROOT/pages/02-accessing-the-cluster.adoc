@@ -54,12 +54,12 @@ image::terminal-window.png[Terminal Window, 900]
 
 ### Clone the GIT repository required for the workshop
 
-The workshop materials are held in a publically available Github repository, you need to clone it. To do this, in the command window enter the following:
+The workshop materials are held in a publically available Github repository, you need to clone it. To do this, in the terminal window enter the following:
 
 [.console-input]
 [source, execute]
 ----
-git clone https://github.com/pprosser-redhat/k8s-basics-dev.git
+git clone https://github.com/pprosser-redhat/k8s-basics.git
 ----
 
 To be prepared to use the repositories workshop files, change directory to it:
@@ -68,6 +68,8 @@ To be prepared to use the repositories workshop files, change directory to it:
 ----
 cd k8s-basics-dev/apps
 ----
+
+All of the files we need will be accessible from the directory you are now in.
 
 NOTE: After a certain amount of inactivity, the terminal will shutdown. That's fine as there is a button you press to restart the session if needed. However, the terminal is stateless, therefore you will need to perform the git clone again. 
 
