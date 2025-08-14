@@ -2,9 +2,12 @@ As already highlighted, a key resource created when deploying an application is 
 
 To view the `deployment` resource used for the front end web application, run:
 
-```execute
-cat frontend/deployment.yaml
-```
+[.console-input]
+[source, execute]
+----
+cat frontend/deployment-parksmap.yaml
+----
+
 
 This has various parts to it, as well as dependencies on other resources, so let's start over and create this from scratch.
 
@@ -14,131 +17,150 @@ An alternative is to have `kubectl` create it for you. For a `deployment`, the `
 
 The first option is using the `kubectl create deployment` command.
 
-```execute
+[.console-input]
+[source, execute]
+----
 kubectl create deployment --help
-```
+----
 
-For the deployment of the front end web application, the container image we want to use is `openshiftkatacoda/blog-django-py:latest`.
+For the deployment of the front end web application, the container image we want to use is `quay.io/openshiftroadshow/parksmap:latest'`.
 
 To see what `kubectl create deployment` would create for us run:
 
-```execute
-kubectl create deployment blog --image openshiftkatacoda/blog-django-py:latest --dry-run -o yaml
-```
+[.console-input]
+[source, execute]
+----
+kubectl create deployment parksmap --image quay.io/openshiftroadshow/parksmap:latest --replicas 1 --dry-run=client -o yaml
+----
 
 This should yield:
 
-```
+[.console-output]
+[source]
+----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: blog
-  name: blog
+    app: parksmap
+  name: parksmap
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: blog
+      app: parksmap
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: blog
+        app: parksmap
     spec:
       containers:
-      - image: openshiftkatacoda/blog-django-py:latest
-        name: blog-django-py
+      - image: quay.io/openshiftroadshow/parksmap:latest
+        name: parksmap
         resources: {}
 status: {}
-```
+----
 
-Note that nothing has been created at this point as when we ran `kubectl create deployment` we used the `--dry-run` option, it therefore only showed what it would create.
+NOTE: In the previous module, we discussed the value of labels. Looking at the output, you'll notice that labels discussed such as 'role=frontend' are not there. The 'kubectl create deployment' command doesn't allow us to add labels. We'll add those in another step shortly. 
 
-Although `kubectl create deployment` could be used, it is a very bare bones skeleton for a `deployment` object.
+Nothing has been created at this point as when we ran `kubectl create deployment` we used the `--dry-run=client` option, it therefore only showed what it would create.
 
-A second option is to use `kubectl run`.
+Now, run the command for real. 
 
-```execute
-kubectl run --help
-```
+[.console-input]
+[source, execute]
+----
+kubectl create deployment parksmap --image quay.io/openshiftroadshow/parksmap:latest --replicas 1
+----
 
-This command accepts numerous options for helping you fill out the resource definition with additional key configuration you might need.
+You should see the following output:
 
-To start to replicate the configuration for our sample application, run:
+[.console-output]
+[source]
+----
+deployment.apps/parksmap created
+----
 
-```execute
-kubectl run blog --image openshiftkatacoda/blog-django-py:latest --labels app=blog --replicas 2 --port 8080 --env BLOG_SITE_NAME="OpenShift Blog" --dry-run -o yaml
-```
+As we have done previously, you can monitor the deployment to make sure it's successful by running the following command
 
-This should produce:
+[.console-input]
+[source, execute]
+----
+kubectl rollout  status deployment/parksmap
+----
 
-```
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  creationTimestamp: null
-  labels:
-    app: blog
-  name: blog
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: blog
-  strategy: {}
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: blog
-    spec:
-      containers:
-      - env:
-        - name: BLOG_SITE_NAME
-          value: OpenShift Blog
-        image: openshiftkatacoda/blog-django-py:latest
-        name: blog
-        ports:
-        - containerPort: 8080
-        resources: {}
-status: {}
-```
+To make the application more manageable we'll add our labels. Hopefully we'll get his simialar to those we deployed earlier.
 
-The difference is that it has set the number of replicas of our application that we want to be 2 instead of 1. It includes the port number our application listens on, and includes one of the environment variables we want to be set. We have also ensured the label used is `app=blog`. This version of the `deployment` is still far from complete, but it is enough to get us started.
+Run the following command
 
-One could now re-run the command and leave off the `--dry-run` option and it would create the resource. To make subsequent changes to the resource definition, one could then edit it in place using the `kubectl edit` command.
+[.console-input]
+[source, execute]
+----
+kubectl label --overwrite deployment parksmap app=workshop app.kubernetes.io/part-of=workshop app.kubernetes.io/instance=parksmap app.kubernetes.io/component=parksmap app.openshift.io/runtime=rh-spring-boot role=frontend app.kubernetes.io/name=parksmap component=parksmap
+----
 
-Maintaining the master copy of the configuration in Kubernetes like this is fine in a development environment, but for production, it is better to keep the master copy as a local file, under revision control so you can track it, and when changes are needed, edit the local master copy and apply it to the Kubernetes cluster.
+To make sure the command was successful, run the following command
 
-The Kubernetes documentation has a discussion about these two different approaches to managing configuration in [Managing Kubernetes Objects Using Imperative Commands](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/imperative-command/) and [Declarative Management of Kubernetes Objects Using Configuration Files](https://kubernetes.io/docs/concepts/overview/object-management-kubectl/declarative-config/).
+[.console-input]
+[source, execute]
+----
+kubectl describe deployment parksmap
+----
 
-As it is closer to what you would want to do for a production environment, we will use the latter approach.
+The outout should look similar to the following:
 
-For this first attempt towards replicating the front end web application, the output from `kubectl run` has been captured in the file `frontend-v1/deployment.yaml`. You can see the full contents of the directory by running:
+[.console-output]
+[source]
+----
+Name:                   parksmap
+Namespace:              wksp-user1
+CreationTimestamp:      Thu, 14 Aug 2025 14:41:56 +0000
+Labels:                 app=workshop
+                        app.kubernetes.io/component=parksmap
+                        app.kubernetes.io/instance=parksmap
+                        app.kubernetes.io/name=parksmap
+                        app.kubernetes.io/part-of=workshop
+                        app.openshift.io/runtime=rh-spring-boot
+                        component=parksmap
+                        role=frontend
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=parksmap
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=parksmap
+  Containers:
+   parksmap:
+    Image:         quay.io/openshiftroadshow/parksmap:latest
+    Port:          <none>
+    Host Port:     <none>
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   parksmap-86f598b786 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  51s   deployment-controller  Scaled up replica set parksmap-86f598b786 from 0 to 1
+----
 
-```execute
-ls -las frontend-v1
-```
+You can see the labels you added above.
 
-As is, it is only the one file. We could at this point run `kubectl apply` on just this file, but as we go along we will be adding additional files for other resources. We will therefore continue to use the ability of `kubectl apply` to be given a directory of files to process and apply them in one operation.
+Using 'kubectl create' to create the deployment is really useful, and a great tool for learning and creating the required yaml for all artefacts in the cluster.
 
-Create the `deployment` by running:
+Once you start heading to production though, you'll be wanting to automate deployment by creating, and deploying the yaml files (as we did in the earlier lab). Using tools such as Helm and Kustomize can make light work of templating/deploying applications into production.  
 
-```execute
-kubectl apply -f frontend-v1/
-```
-
-It should output:
-
-```
-deployment.apps/blog created
-```
-
-Monitor progress of the deployment so you know when it has completed.
-
-```execute
-kubectl rollout status deployment/blog
-```
+If you choose to store the yaml files into a Git repository, you can then starting thinking about gitops. Tools such as ArgoCD can be used to manage and deploy applications into production based on git repositories, and the changes that occur to the files held there.
