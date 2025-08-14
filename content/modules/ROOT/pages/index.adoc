@@ -32,7 +32,6 @@ Querying and Labelling the Resources
 
 Deploying the front end web application
 
-* xref:07-deployment-rbac.adoc[Role Based Access Control]
 * xref:07-deployment-resource.adoc[Deployment Resource]
 * xref:08-replicasets-and-pods.adoc[Replicasets and Pods]
 
