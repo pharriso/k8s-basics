@@ -5,6 +5,7 @@ metadata:
   labels:
     app: workshop
     role: frontend
+    component: parksmap
 spec:
   rules:
     - host: parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io
