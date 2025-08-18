@@ -1,23 +1,43 @@
-The front end web application is running and is accessible to the public internet. At this point it is using a file based SQLite database which has been pre-populated with some posts. This database is local to each instance, not shared between all (making it unsuited to a scaled application), and any changes to data will be lost whenever the `pod` restarts.
+The back end rest application is running and is accessible to the kubernetes cluster via its service definition `nationalparks-py`. 
 
-To provide persistence for data, and have all instances of the application using the same database, we will configure the front end web application to use the separate Postgresql database which is already running.
+The national parks data is held in a mongodb database which you deployed as the very first step in this workshop.
+
+This database is useful as it ensures that the data is available to all replicas of the national parks rest service and of course is available to any other application requiring national parks information.
 
 To view the resources for the database, run:
 
-```execute
-kubectl get deployment,service,pvc,secret -l app=blog-db -o name
-```
+[.console-input]
+[source,execute]
+----
+kubectl get deployment,service -l role=database -o name
+----
 
 This should yield:
 
-```
-deployment.extensions/blog-db
-service/blog-db
-persistentvolumeclaim/blog-database
-secret/blog-credentials
-```
+[.console-input]
+[source,execute]
+----
+deployment.apps/mongodb-community-server
+service/mongodb-community-server
+----
 
-You should understand now the purpose of `deployment` and `service`. The `persistentvolumeclaim` is used to claim persistent storage for use by the database. The `secret` is used to hold the credentials for the database.
+You should understand now the purpose of `deployment` and `service`. 
+
+
+********
+The `persistentvolumeclaim` is used to claim persistent storage for use by the database. The `secret` is used to hold the credentials for the database.
+********
+
+To make this step of the workshop execute successfully, you need to deploy a slightly different version of the nationalparks-py back end service.
+
+type:
+[.console-input]
+[source,execute]
+----
+kubectl delete pods  -l component=nationalparks-py
+----
+
+
 
 In order to link the database to the front end web application, we need to tell the front end web application the name of the host for the database, and what the login credentials are. To do this we need to add environment variable settings to the `deployment` for the front end web application.
 
