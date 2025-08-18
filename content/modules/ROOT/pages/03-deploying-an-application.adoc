@@ -98,7 +98,7 @@ image::ingress-screenshot.png[Parksmap Ingress, 900]
 
 to the host field you see below.
 
-`- host: parksmap-wksp-{user}.apps.cluster-{openshift_cluster_ingress_domain}`
+`- host: parksmap-wksp-{user}.{openshift_cluster_ingress_domain}`
 
 ==== Deploy the front end web application
 
