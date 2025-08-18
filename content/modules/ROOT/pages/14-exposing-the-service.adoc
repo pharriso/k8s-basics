@@ -45,7 +45,7 @@ As in the first module, you need to adjust the host in the `ingress-parksmap.yam
 In the terminal window, edit the file `frontend-v2/ingress-parksmap.yaml`
 
 type
-[.console-output]
+[.console-input]
 [source, execute]
 ----
 vim frontend-v2/ingress-parksmap.yaml
@@ -61,7 +61,7 @@ to the host field you see below.
 
 To update the configuration for the front end web application to add the `ingress` run:
 
-[.console-output]
+[.console-input]
 [source, execute]
 ----
 kubectl apply -f frontend-v2/
@@ -69,15 +69,17 @@ kubectl apply -f frontend-v2/
 
 This should output:
 
-```
-deployment.apps/blog configured
-ingress.extensions/blog created
-service/blog unchanged
-```
+[.console-output]
+[source]
+----
+deployment.apps/parksmap unchanged
+ingress.networking.k8s.io/parksmap created
+service/parksmap unchanged
+----
 
 You can review the `ingress` resource which was created by running:
 
-[.console-output]
+[.console-input]
 [source, execute]
 ----
 kubectl get ingress -l component=parksmap
