@@ -20,7 +20,7 @@
 
 * xref:11-application-logging.adoc[Application Logging]
 
-* xref:16-setting-up-database.adoc[Accessing the Container]
+* xref:12-accessing-containers.adoc[Accessing the Container]
 
 * Service Networking
 ** xref:13-service-networking.adoc[Exposing to the cluster]
