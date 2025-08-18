@@ -133,7 +133,7 @@ In the resources created for the front end web application, the `ingress` is spe
 
 In this example, the URL for accessing the front end web application will be:
 
-http://parksmap-wksp-{user}.apps.cluster-{openshift_cluster_ingress_domain}/
+`http://parksmap-wksp-{user}.apps.cluster-{openshift_cluster_ingress_domain}`
 
 This is easy to findout by running a query againts the parksmap ingress using `kubectl`:
 [.console-input]
@@ -171,9 +171,7 @@ The value of host is what you are after.
 
 Visit the front end web application by typing (or copying).
 
-
-`http://parksmap-wksp-{user}.apps.cluster-{guid}.dynamic.redhatworkshops.io/``
-
+`http://parksmap-wksp-{user}.apps.cluster-{openshift_cluster_ingress_domain}`
 
 into your browser (`Please make sure you use the host name from your cluster`)
 
