@@ -216,8 +216,7 @@ Now visit the front end web application again (make sure you refresh the page), 
 
 Fortunately, the backend application has an API that we can use to load the data. Later, we'll look at how logging might have helped us work this out.
 
-To load the data into the database, run:
-
+To load the data into the database, run the following `curl` command in your terminal window:
 
 `curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/load`
 
