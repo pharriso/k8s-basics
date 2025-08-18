@@ -45,7 +45,7 @@ Scaling the Application
 xref:11-application-logging.adoc[Application Logging]
 
 [.tile]
-xref:12-accessing-containers[Accessing the Container]
+xref:12-accessing-containers.adoc[Accessing the Container]
 
 [.tile]
 Service Networking
