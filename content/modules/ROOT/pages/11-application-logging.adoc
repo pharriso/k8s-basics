@@ -2,23 +2,31 @@ Each instance of an application runs in it's own `pod`.
 
 As you have already seen, you can list the `pods` for the front end web application using:
 
-```execute
-kubectl get pods -l app=blog -o name
-```
+[.console-input]
+[source,execute]
+----
+kubectl get pods -l component=parksmap -o name
+----
 
 To access the log output for a specific instance of your application, you can use the name of the `pod` with the `kubectl logs` command.
 
 As we have multiple pods, we need to grab just one of the names.
 
-```execute
-POD=`kubectl get pod -l app=blog -o template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | head -1` && echo $POD
-```
+[.console-input]
+[source,execute]
+----
+POD=`kubectl get pod -l component=parksmap -o template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' | head -1` && echo $POD
+----
 
-Then run `kubectl logs`:
+The command above just gets the pod name from the output and stores it in an environemnt variable. if you don't want to be flash then you can just copy and paste the pod name directly into the `kubectl logs` command.
 
-```execute
+run `kubectl logs`:
+
+[.console-input]
+[source,execute]
+----
 kubectl logs $POD
-```
+----
 
 Were there multiple containers in the `pod`, you would need to name the container using the `-c` or `--container` option. Alternatively, you could use the `--all-containers` option to fetch logs from application process running in any of the containers.
 
