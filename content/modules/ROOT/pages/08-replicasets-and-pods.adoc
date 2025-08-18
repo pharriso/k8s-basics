@@ -32,7 +32,9 @@ kubectl get replicaset -l component=parksmap -o yaml
 
 In this you will see that the `spec` section contains:
 
-```
+[.console-output]
+[source]
+----
   spec:
     replicas: 1
     selector:
@@ -61,7 +63,7 @@ In this you will see that the `spec` section contains:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-```
+----
 
 This has been filled out with what was provided in the `spec` portion of the `deployment`.
 
