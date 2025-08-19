@@ -133,7 +133,7 @@ The database credentials could be added in a similar way, but for this applicati
 [.console-input]
 [source,execute]
 ----
-cat apps/backend-v2/mongo-nationalparks-user-secret.yaml
+cat apps/backend-v3/mongo-nationalparks-user-secret.yaml
 ----
 
 Within the output you will see the `data` section holding values:
@@ -160,7 +160,7 @@ Now, add the secert to our Kubernetes cluster.
 [.console-input]
 [source,execute]
 ----
-kubectl apply -f backend-v2/mongo-nationalparks-user-secret.yaml
+kubectl apply -f backend-v3/mongo-nationalparks-user-secret.yaml
 ----
 
 Now take a look at the secret strored in the cluster.
