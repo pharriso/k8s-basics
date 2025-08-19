@@ -30,7 +30,9 @@ image::workshop-screenshot.png[Workshop Guide, 1000]
 
 On the right hand side of the screen, as above, you'll see 2 terminal windows that you can use to complete the labs.
 
-In one of the terminals windows you need to login to the cluster, logging into one of them will also provide the login context to the other. Feel free to use one of both of the windows. One of the labs later on will take advantage of having 2 terminal windows. 
+In one of the terminals windows you need to login to the cluster, logging into one of them will also provide the login context to the other. Feel free to use one of both of the windows. One of the labs later on will take advantage of having 2 terminal windows.
+
+Enter the following command:
 
 `oc login  https://api.cluster-{guid}.dynamic.redhatworkshops.io:6443 -u {user} -p {password} -insecure-skip-tls-verify`
 
