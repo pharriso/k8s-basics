@@ -81,9 +81,6 @@ cd k8s-basics-dev/apps
 
 All of the files we need will be accessible from the directory you are now in.
 
-NOTE: After a certain amount of inactivity, the terminal will shutdown. That's fine as there is a button you press to restart the session if needed. However, the terminal is stateless, therefore you will need to perform the git clone again. 
-
-
 ### Test kubectl
 Before continuing, verify that the `kubectl` command runs and the workshop environment is also functioning. To do this run:
 
