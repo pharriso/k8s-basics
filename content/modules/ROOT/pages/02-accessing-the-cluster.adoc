@@ -3,11 +3,9 @@ include::vars.adoc[]
 
 For the exercises you will be doing, you will be using the `kubectl` command line program to interact with Kubernetes. 
 
-The terminal window is provided for you via the interactive terminal session. It is accessible through the OpenShift Console cluster console URL. The URL will be made available to you once you have registered for a user. Don't worry, the lovely folks running the workshop will provide you with the instructions and URL's required to register during the introduction. You do not need to install anything on your own computer. You will be doing everything here through your web browser. 
+The terminal window is provided for you via the interactive terminal session available in your workshop guide.  
 
-There is no need to login as you are already connected to the Kubernetes cluster you will be using.
-
-The workshop environment also provides you with a web based view into the Kubernetes cluster. This is available through the registration web app. This web based view uses the web interface which is included in OpenShift 4. This is included so you can visually see the results of what you do in the exercises if you want, but the exercises do not depend on it. The web interface provided here is different to the web interface that may be provided with other Kubernetes distributions.
+The workshop environment also provides you with a web based view into the Kubernetes cluster. This web based view uses the web interface which is included in OpenShift 4. Whilst not part of the workshop, it is included here so you can visually see the results of what you do in the exercises if you want, the exercises do not depend on it. The web interface provided here is different to the web interface that may be provided with other Kubernetes distributions.
 
 Testing cluster details 
 
@@ -19,25 +17,36 @@ To access the OpenShift Console, navigate to the following URL in your browser a
 
 *Password:* `{ocp4_starter_password}`
 
-*Note from Phil....The login part below needs to change, it will not work using the workshop framework as is. Need to come up with a way the attendee can login using kubectl. I've tried and failed so far as the cluster is using keycloak for login (I think)*
-*Worst caswe, we can put some instructions in to go to the console and get the login command using a token and oct command. Comming back to it later*
 
-*For now, you are OCP experts, just go to the console, get the login command and token and use that for testing*
+## Accessing the terminal window so you can use the cluster
 
+### Workshop Environment
 
-## Accessing the terminal window in the Kubernetes Cluster
+You workshop environment looks like:
 
-### Login to the cluster
+image::workshop-screenshot.png[Workshop Guide, 1000]
 
-click on you `OpenShift cluster console` URL, and login using the credentials provided.
+### Login
 
-One logged in, you should see a page similar to the one shown below:
+On the right hand side of the screen, as above, you'll see 2 terminal windows that you can use to complete the labs.
 
-image::openshift-console.png[OpenShift Console, 1000]
+In one of the terminals windows you need to login to the cluster, logging into one of them will also provide the login context to the other. Feel free to use one of both of the windows. One of the labs later on will take advantage of having 2 terminal windows. 
 
-### Create a namespace
+`oc login  https://api.cluster-{guid}.dynamic.redhatworkshops.io:6443 -u {user} -p {password} -insecure-skip-tls-verify`
 
-As an enterprise Kubernetes deployment, the environment you are using is locked down and you are unable to create namespaces. Namespaces enable you to isolate your resources within a single cluster. The isolation is what's enabling all workshop attendees to perform the same labs on the same cluster without impacting each other's work.
+You should see the following in response to the command:
+
+```
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Login successful.
+
+You have one project on this server: "wksp-{user}"
+
+Using project "wksp-user1".
+```
+
+As an enterprise Kubernetes platform, the environment you are using is locked down and you are unable to create namespaces. Namespaces enable you to isolate your resources within a single cluster. The isolation is what's enabling all workshop attendees to perform the same labs on the same cluster without impacting each other's work.
 
 A namespace has automatically been created for you, it is called 
 
@@ -46,11 +55,7 @@ wksp-{user}
 You won't really know that you are using it, as your environment will default to it all the time. It's good to know that it is being used though, as namespaces will become an important facility you use to isolate workloads on the clusters. 
 
 
-NOTE: Most of the workshop will now take place in the terminal window. 
-
-For reference, you can see an example of the terminal window on the right hand side of the browser below.
-
-image::terminal-window.png[Terminal Window, 900]
+NOTE: The workshop will now take place in the terminal window. 
 
 ### Clone the GIT repository required for the workshop
 
@@ -62,7 +67,10 @@ The workshop materials are held in a publically available Github repository, you
 git clone https://github.com/pprosser-redhat/k8s-basics.git
 ----
 
+You can see the resulting clone in both terminal windows.
+
 To be prepared to use the repositories workshop files, change directory to it:
+
 [.console-input]
 [source, execute]
 ----
@@ -83,7 +91,7 @@ Before continuing, verify that the `kubectl` command runs and the workshop envir
 kubectl version
 ----
 
-Did you type the command in yourself? If you did, click on the command here instead and you will find that it is executed for you. You can click on any command here in the workshop notes which has the <span class="fas fa-play-circle"></span> icon shown to the right of it, and it will be copied to the interactive terminal and run for you.
+Did you type the command in yourself? If you did, you can make things easier by copy and pasting the command into the interactive terminal.
 
 When run, you should see output similar to:
 
