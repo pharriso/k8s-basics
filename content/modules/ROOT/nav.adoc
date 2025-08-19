@@ -30,6 +30,5 @@
 ** xref:15-linking-the-database.adoc[Linking the Database to the App]
 
 * Persistent Volumes
-** xref:16-setting-up-database.adoc[Setting up the Database]
 ** xref:17-persistent-volumes.adoc[Persistent Volumes]
 

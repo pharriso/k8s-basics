@@ -61,5 +61,4 @@ Confinguration and Secrets
 [.tile]
 Persistent Volumes
 
-* xref:16-setting-up-database.adoc[Setting up the Database]
 * xref:17-persistent-volumes.adoc[Persistent Volumes]

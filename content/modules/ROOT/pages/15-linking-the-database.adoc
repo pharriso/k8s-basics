@@ -23,11 +23,6 @@ service/mongodb-community-server
 
 You should understand now the purpose of `deployment` and `service`. 
 
-
-********
-The `persistentvolumeclaim` is used to claim persistent storage for use by the database. The `secret` is used to hold the credentials for the database.
-********
-
 To make this step of the workshop execute successfully, you need to deploy a slightly different version of the nationalparks-py back end service.
 
 type:
@@ -133,7 +128,7 @@ The database credentials could be added in a similar way, but for this applicati
 [.console-input]
 [source,execute]
 ----
-cat apps/backend-v3/mongo-nationalparks-user-secret.yaml
+cat backend-v3/mongo-nationalparks-user-secret.yaml
 ----
 
 Within the output you will see the `data` section holding values:
