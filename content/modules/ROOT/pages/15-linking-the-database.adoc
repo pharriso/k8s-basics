@@ -40,7 +40,7 @@ You could use what you've learned to try and debug the problem.
 
 For example, you could try looking at the nationalpark-py pods logs to see if there are any clues there.
 
-You could try running the `env` coommand in the nationalparks-py pod to see if there are any clues there.
+You could try running the `env` command in the nationalparks-py pod to see if there are any clues there.
 
 
 In order to link the database to the back end rest application, you need to tell the back end rest application the name of the host for the database, and what the login credentials are. 
@@ -53,9 +53,9 @@ This is a common problem for any application. The need to provide environment sp
 
 Externalising configuration is best, storing the configuration in a seperate yaml file means that the deployment doesn't need to change between environments.
 
-In this module, you'll take a look at both enironment variables and secrets. In terms of useage, Configmaps are similar to Secrets.
+In this module, you'll take a look at both enironment variables and secrets. In terms of usage, Configmaps are similar to Secrets.
 
-To start with you need to add environment variable settings to the `deployment` for the back end rest application. You can see what environment variables are already set for the back end rest application by running: web application.
+To start with you need to add an environment variable settings to the `deployment` for the back end rest application. 
 
 The way that the back end rest application is implemented, it is expecting the following environment variables for a separate database.
 
@@ -66,14 +66,14 @@ The way that the back end rest application is implemented, it is expecting the f
 
 To set environment variables, `kubectl` provides the command `kubectl set env`. You are going to update the live configuration change as you'll want to see these commands in action, but keep in mind that best practice would be to modify the locally stored deployment yaml file to enable the change to easily flow between enironments. Of course, you could add `--dry-run=client` to the command to capture the setting to assist in getting it right.
 
-For the database host, the host name will be the name of the database `service` object, which is `mongodb-community-server`.
+For the DB_URI, the host name will be the name of the database `service` object, which is `mongodb-community-server`.
 
-To see what the `deployment` configuration would look like with that set, we can run:
+To make the change to the `deployment` configuration,, you run :
 
 [.console-input]
 [source,execute]
 ----
-kubectl set env deployment/nationalparks-py DB_URI=mongodb-community-server -o yaml
+kubectl set env deployment/nationalparks-py DB_URI=mongodb-community-server
 ----
 
 You should see the following output:

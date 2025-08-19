@@ -251,16 +251,16 @@ status:
 
 Find the section under template called labels, you should see `app: parksmap` there.
 
-[.console-output]
-[source]
+[.console-input]
+[source, execute]
 ----
 delete that whole line 
 ----
 
 copy and paste the following labels:
 
-[.console-output]
-[source]
+[.console-input]
+[source, execute]
 ----
         app: parksmap
         component: parksmap

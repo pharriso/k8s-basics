@@ -1,31 +1,52 @@
-One of the resources associated with the database was a persistent volume. We also need a persistent volume for the front end web application. This is required because although the blog post content is stored in the database, any image attached to the post is stored in the file system. As the container file system is ephemeral, the images would be lost when a `pod` is killed. The container file system is also not shared between the multiple instances of the application.
+To provide persistence for data you are using a MongoDB database, all instances of the application are using the same database, as we scale the application up and down, the database data is available to all instances. 
 
-To add persistent storage to an application, the first step is that you need to create a persistent volume claim. This tells Kubernetes that you need storage, how big the volume needs to be and what type of storage is required.
+Currently, the databases data is stored inside the running container, the storage in the container is ephemeral, when a  database `pod` is killed, the data is lost. Not really the desired outcome of a database.
+
+Lets test this out.
+
+In your terminal window, type:
+
+[.console-input]
+[source,execute]
+----
+kubectl delete pod -l role=database
+----
+
+Go back to the Parksmap application in your browser. You should see that all the National Parks are gone. 
+
+A resource that can be associated with the any 'pod'  is a persistent volume. The data stored in the persistent volume will survive when the pod is killed and restarted. `Persistent volumes` are typically stored in some form of shared storage and is configured by the kubernetes platform owner. You define the configuration in the template section of the deployment yaml file. It will then roll the configuration out to the resulting `pods`
+
+To add persistent storage to an application, the first step is that you need to create a `persistent volume claim`. This tells Kubernetes that you need storage, how big the volume needs to be and what type of storage is required.
 
 The resource definition for the persistent volume claim we need to use can be seen by running:
 
-```execute
-cat frontend-v5/persistentvolumeclaim.yaml
-```
+[.console-input]
+[source,execute]
+----
+cat database-v1/persistentvolumeclaim.yaml
+----
 
 You should see that it contains:
 
-```
+[.console-output]
+[source]
+----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: blog-media
+  name: national-parks-database
   labels:
-    app: blog
+    app: national-parks-database
+    role: database
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-```
+----
 
-This says that the storage should be at least of size 1Gi and that the access mode should be `ReadWriteMany`.
+This says that the storage should be at least of size 1Gi and that the access mode should be `ReadWriteOnce`.
 
 Kubernetes supports three different access modes for storage.
 
@@ -35,52 +56,92 @@ Kubernetes supports three different access modes for storage.
 
 What access modes for storage are available will depend on the Kubernetes cluster.
 
-For the front end web application we are using, because we want to be able to run multiple instances, we need storage with an access mode that allows it to be mounted on multiple nodes in the Kubernetes cluster. This is because instances of the application could run on different nodes. This is why `ReadWriteMany` is requested.
+For the database we are using, because we want to be able to run a single instance, we need storage with access mode `ReadWriteOnce`. 
 
-In contrast, the database will only ever have one instance and so storage with access mode `ReadWriteOnce` is sufficient.
+Create the persistent volume claim run the foloowing command:
+
+[.console-input]
+[source,execute]
+----
+kubectl apply -f database-v1/persistentvolumeclaim.yaml
+----
+
+You should get confirmation telling you that the persistent volume claim has been created.
+
+If you want to use some of the commands you've learned to confirm the creation then please feel free to.
 
 In addition to creating the persistent volume claim, the `deployment` needs to be updated.
 
 At `spec.template.spec.volumes` in the `deployment` we need to add:
 
-```
+[.console-output]
+[source]
+----
       volumes:
-      - name: media
-        persistentVolumeClaim:
-          claimName: blog-media
-```
+      ....
+        - name: national-parks-database
+          persistentVolumeClaim:
+            claimName: national-parks-database
+      ....
+----
 
 This indicates the persistent volume claim is to be used.
 
-At `spec.template.spec.containers.volumeMounts`, we neeed to add:
+At `spec.template.spec.containers.volumeMounts`, we need to add:
 
-```
+[.console-output]
+[source]
+----
         volumeMounts:
-        - name: media
-          mountPath: "/opt/app-root/src/media"
-```
+        ....
+          - name: national-parks-database
+            mountPath: /data
+        ....
+----
 
-This indicates that the persistent volume should be mounted at the path `/opt/app-root/src/media` in the container.
+This indicates that the persistent volume should be mounted at the path `/data` in the container.
 
 To see the updated `deployment` configuration run:
 
-```execute
-cat frontend-v5/deployment.yaml
-```
+[.console-output]
+[source]
+----
+cat database-v1/deployment.yaml
+----
 
 To apply the configuration changes run:
 
-```execute
-kubectl apply -f frontend-v5/
-```
+[.console-output]
+[source]
+----
+kubectl apply -f database-v1/deployment.yaml
+----
 
-This should output:
+You should see confirmation that the deployment was configured.
 
-```
-deployment.apps/blog configured
-ingress.extensions/blog unchanged
-persistentvolumeclaim/blog-media created
-service/blog unchanged
-```
+The database should now be able to recover from failures, restarts and so on.
 
-Both components of the application, the database and the front end web application are fully deployed once again.
+Test it out.
+
+Firstly, lets load the datab back info the database. In the terminal window, run 
+
+`curl http://nationalparks-py.wksp-{user}.svc.cluster.local:8080/ws/data/load`
+
+Refresh the parksmap page in the `browser`. You should see national parks appearing on the map.
+
+Now, kill the database pod again by running
+
+[.console-input]
+[source,execute]
+----
+kubectl delete pod -l role=database
+----
+
+Check the status of the pod to make sure it is running by typing the following into the terminal window:
+
+[.console-input]
+[source,execute]
+----
+kubectl get pods -l role=database
+----
+
