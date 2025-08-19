@@ -43,6 +43,7 @@ The `kubectl apply` command in this case is what is used to create resources fro
 
 If you are ever uncertain about what a command does, or what options it accepts, you can run it with the `--help` option.
 
+[.console-input]
 [source,execute]
 ----
 kubectl apply --help
@@ -87,6 +88,8 @@ As you are running on an environment provisioned specifically for the workshop, 
 In the terminal window, edit the file `frontend/ingress-parksmap.yaml`
 
 type
+
+[.console-input]
 [source, execute]
 ----
 vim frontend/ingress-parksmap.yaml
@@ -169,11 +172,11 @@ This should output something like this:
 
 The value of host is what you are after.
 
-Visit the front end web application by typing (or copying).
+Visit the front end web application by typing (or copying), or right clicking and opening in a new tab.
 
 `http://parksmap-wksp-{user}.{openshift_cluster_ingress_domain}`
 
-into your browser (`Please make sure you use the host name from your cluster`)
+into your browser
 
 It should look like:
 

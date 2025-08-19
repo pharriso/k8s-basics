@@ -4,6 +4,7 @@ metadata:
   name: national-parks-database
   labels:
     app: national-parks-database
+    role: database
 spec:
   accessModes:
   - ReadWriteOnce

@@ -29,6 +29,9 @@ spec:
           emptyDir: {}
         - name: mongodb-community-server-2
           emptyDir: {}
+        - name: national-parks-database
+          persistentVolumeClaim:
+            claimName: national-parks-database
       containers:
         - name: mongodb-community-server
           image: 'quay.io/mongodb/mongodb-community-server:latest'
@@ -40,4 +43,6 @@ spec:
               mountPath: /data/configdb
             - name: mongodb-community-server-2
               mountPath: /data/db
+            - name: national-parks-database
+              mountPath: /data
           imagePullPolicy: Always
