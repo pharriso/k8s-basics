@@ -23,7 +23,7 @@ spec:
     metadata:
       labels:
         app: nationalparks-py
-        component: nationparks
+        component: nationalparks-py
         deployment: nationalparks-py
         role: backend
         type: parksmap-backend
