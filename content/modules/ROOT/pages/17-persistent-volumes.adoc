@@ -94,8 +94,11 @@ At `spec.template.spec.containers.volumeMounts`, we need to add:
 ----
         volumeMounts:
         ....
-          - name: national-parks-database
-            mountPath: /data
+          volumeMounts:
+            - name: national-parks-database
+              mountPath: /data/configdb
+            - name: national-parks-database
+              mountPath: /data/db
         ....
 ----
 
