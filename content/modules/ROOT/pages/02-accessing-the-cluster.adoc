@@ -76,7 +76,7 @@ To be prepared to use the repositories workshop files, change directory to it:
 [.console-input]
 [source, execute]
 ----
-cd k8s-basics-dev/apps
+cd k8s-basics/apps
 ----
 
 All of the files we need will be accessible from the directory you are now in.
