@@ -12,8 +12,6 @@ metadata:
     app.kubernetes.io/name: mongodb-community-server
     component: mongodb-community-server
 spec:
-  strategy:
-    type: Recreate
   replicas: 1
   selector:
     matchLabels:
