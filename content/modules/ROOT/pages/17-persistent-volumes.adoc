@@ -142,6 +142,8 @@ kubectl delete pod --force -l role=database
 
 NOTE: you are using the --force flag to terminate the pod quickly. Delete pod is a controlled shutdown which in our case means the terminating pod holds on to a mongodb lock file in the persistent volume. Without force, it will cause the new starting pod to fail as it cannot get a hold of the lock file.
 
+NOTE: For the keen eyed, you might also spot that the deployment strategy has changed to recreate. Rolling updates were briefly mention earlier. Recreate means that any deployment changes result in a complete shutdown of the database (in this case). This, again, is to ensure that any old deployment doesn't hold on to the persistent volume lock file. 
+
 Check the status of the pod to make sure it is running by typing the following into the terminal window:
 
 [.console-input]
