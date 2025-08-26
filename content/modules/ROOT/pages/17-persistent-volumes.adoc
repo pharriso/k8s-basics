@@ -9,12 +9,12 @@ In your terminal window, type:
 [.console-input]
 [source,execute]
 ----
-kubectl delete pod -l role=database
+kubectl delete pod --force -l role=database
 ----
 
 Go back to the Parksmap application in your browser. You should see that all the National Parks are gone. 
 
-A resource that can be associated with the any 'pod'  is a persistent volume. The data stored in the persistent volume will survive when the pod is killed and restarted. `Persistent volumes` are typically stored in some form of shared storage and is configured by the kubernetes platform owner. You define the configuration in the template section of the deployment yaml file. It will then roll the configuration out to the resulting `pods`
+A resource that can be associated with any 'pod' is a persistent volume. The data stored in the persistent volume will survive when the pod is killed and restarted. `Persistent volumes` are typically stored in some form of shared storage and is configured by the kubernetes platform owner. You define the configuration in the template section of the deployment yaml file. It will then roll the configuration out to the resulting `pods`
 
 To add persistent storage to an application, the first step is that you need to create a `persistent volume claim`. This tells Kubernetes that you need storage, how big the volume needs to be and what type of storage is required.
 
@@ -58,7 +58,7 @@ What access modes for storage are available will depend on the Kubernetes cluste
 
 For the database we are using, because we want to be able to run a single instance, we need storage with access mode `ReadWriteOnce`. 
 
-Create the persistent volume claim run the foloowing command:
+Create the persistent volume claim by running the following command:
 
 [.console-input]
 [source,execute]
@@ -103,16 +103,16 @@ This indicates that the persistent volume should be mounted at the path `/data` 
 
 To see the updated `deployment` configuration run:
 
-[.console-output]
-[source]
+[.console-input]
+[source,execute]
 ----
 cat database-v1/deployment.yaml
 ----
 
 To apply the configuration changes run:
 
-[.console-output]
-[source]
+[.console-input]
+[source,execute]
 ----
 kubectl apply -f database-v1/deployment.yaml
 ----
@@ -134,8 +134,10 @@ Now, kill the database pod again by running
 [.console-input]
 [source,execute]
 ----
-kubectl delete pod -l role=database
+kubectl delete pod --force -l role=database
 ----
+
+NOTE: you are using the --force flag to terminate the pod quickly. Delete pod is a controlled shutdown which in our case means the terminating pod holds on to a mongodb lock file in the persistent volume. Without force, it will cause the new starting pod to fail as it cannot get a hold of the lock file.
 
 Check the status of the pod to make sure it is running by typing the following into the terminal window:
 
