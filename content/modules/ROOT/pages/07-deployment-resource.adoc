@@ -249,15 +249,9 @@ status:
     message: ReplicaSet "parksmap-86f598b786" has successfully progressed.
 ----
 
-Find the section under template called labels, you should see `app: parksmap` there.
+Find the section under template called labels, you should see `app: parksmap` there. Then, **delete** this whole line.
 
-[.console-input]
-[source, execute]
-----
-delete that whole line 
-----
-
-copy and paste the following labels:
+Then, starting from the line that you just deleted and making sure you take care of the identations, copy and paste the following labels:
 
 [.console-input]
 [source, execute]
