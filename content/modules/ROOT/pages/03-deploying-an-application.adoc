@@ -134,9 +134,11 @@ to monitor and wait for it to be deployed.
 
 In the resources created for the front end web application, the `ingress` is special, in that it is what sets up access to our web application using a public URL.
 
-In this example, the URL for accessing the front end web application will be:
+In this example, the URL for accessing the front end web application will be : `http://parksmap-wksp-{user}.{openshift_cluster_ingress_domain}` 
 
-`http://parksmap-wksp-{user}.{openshift_cluster_ingress_domain}`
+
+ NOTE: make sure that you follow http and not https, sometimes the browser may enforce https so you have to manually change on the browser url
+
 
 This is easy to findout by running a query againts the parksmap ingress using `kubectl`:
 [.console-input]

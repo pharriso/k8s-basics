@@ -150,4 +150,4 @@ You can test it works by running:
 
 The response you see is a ton of html and javascript code. That's fine, it's for the browser and shows that it's working.
 
-Note that this still isn't accessible outside of the Kubernetes cluster, extra steps are required to expose a `service` outside of the cluster. The `curl` command only works because the terminal you are using is running as a `pod` in the same Kubernetes cluster.
+NOTE:  this still isn't accessible outside of the Kubernetes cluster, extra steps are required to expose a `service` outside of the cluster. The `curl` command only works because the terminal you are using is running as a `pod` in the same Kubernetes cluster.
